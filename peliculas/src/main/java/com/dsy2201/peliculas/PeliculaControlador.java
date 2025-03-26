@@ -1,4 +1,4 @@
-package main.java.com.dsy2201.peliculas;
+package com.dsy2201.peliculas;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class PeliculaControlador {
 
     @GetMapping("/peliculas/{id}")
     public Pelicula getPeliculaById(@PathVariable int id){
-        for (main.java.com.dsy2201.peliculas.pelicula pelicula : peliculas){
+        for (Pelicula pelicula : peliculas){
             if (pelicula.getId() == id){
                 return pelicula;
             }
