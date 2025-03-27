@@ -1,4 +1,4 @@
-package com.dsy2201.veterinario;
+package com.dsy2201.veterinaria.aplicacion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
