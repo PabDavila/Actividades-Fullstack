@@ -1,4 +1,4 @@
-package com.dsy2201.veterinaria.clases;
+package com.dsy2201.Semana_3.clases;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,10 +7,7 @@ import lombok.*;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class Servicio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String descripcion;
+    private String nombre;
     private double costo;
 
 }
