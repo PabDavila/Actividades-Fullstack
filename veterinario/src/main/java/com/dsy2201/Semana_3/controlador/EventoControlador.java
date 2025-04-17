@@ -1,35 +1,39 @@
 package com.dsy2201.Semana_3.controlador;
 
-import org.springframework.web.bind.annotation.*;
 import com.dsy2201.Semana_3.clases.Evento;
+import com.dsy2201.Semana_3.repositorio.EventoRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/eventos")
 public class EventoControlador {
-    private final Map<Integer, Evento> eventos = new HashMap<>();
-    private int idCounter = 1;
+
+    @Autowired
+    private EventoRepositorio eventoRepositorio;
 
     @PostMapping("/registrar")
-    public synchronized Evento registrarEvento(@RequestBody Evento evento) {
-        evento.setId(idCounter++);
-        eventos.put(evento.getId(), evento);
-        return evento;
+    public Evento registrarEvento(@RequestBody Evento evento) {
+        return eventoRepositorio.save(evento);
     }
 
     @PostMapping("/{id}/inscribir")
-    public synchronized String inscribirParticipante(@PathVariable int id, @RequestParam String participante) {
-        Evento evento = eventos.get(id);
-        if (evento == null) {
+    public String inscribirParticipante(@PathVariable int id, @RequestParam String participante) {
+        Optional<Evento> optionalEvento = eventoRepositorio.findById(id);
+        if (optionalEvento.isPresent()) {
+            Evento evento = optionalEvento.get();
+            evento.getParticipantes().add(participante);
+            eventoRepositorio.save(evento);
+            return "Participante " + participante + " inscrito en el evento " + evento.getNombre();
+        } else {
             return "Evento no encontrado";
         }
-        evento.getParticipantes().add(participante);
-        return "Participante " + participante + " inscrito en el evento " + evento.getNombre();
     }
 
     @GetMapping("/{id}")
     public Evento obtenerDetalles(@PathVariable int id) {
-        return eventos.get(id);
+        return eventoRepositorio.findById(id).orElse(null);
     }
 }
