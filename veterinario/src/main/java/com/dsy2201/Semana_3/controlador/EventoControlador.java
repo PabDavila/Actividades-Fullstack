@@ -14,26 +14,49 @@ public class EventoControlador {
     @Autowired
     private EventoRepositorio eventoRepositorio;
 
+    // Crear evento
     @PostMapping("/registrar")
     public Evento registrarEvento(@RequestBody Evento evento) {
         return eventoRepositorio.save(evento);
     }
 
+    // Obtener evento por ID
+    @GetMapping("/{id}")
+    public Evento obtenerEvento(@PathVariable int id) {
+        return eventoRepositorio.findById(id).orElse(null);
+    }
+
+    // Agregar participante
     @PostMapping("/{id}/inscribir")
     public String inscribirParticipante(@PathVariable int id, @RequestParam String participante) {
-        Optional<Evento> optionalEvento = eventoRepositorio.findById(id);
-        if (optionalEvento.isPresent()) {
-            Evento evento = optionalEvento.get();
+        Optional<Evento> optional = eventoRepositorio.findById(id);
+        if (optional.isPresent()) {
+            Evento evento = optional.get();
             evento.getParticipantes().add(participante);
             eventoRepositorio.save(evento);
             return "Participante " + participante + " inscrito en el evento " + evento.getNombre();
-        } else {
-            return "Evento no encontrado";
         }
+        return "Evento no encontrado";
     }
 
-    @GetMapping("/{id}")
-    public Evento obtenerDetalles(@PathVariable int id) {
-        return eventoRepositorio.findById(id).orElse(null);
+    // Actualizar evento
+    @PutMapping("/{id}")
+    public Evento actualizarEvento(@PathVariable int id, @RequestBody Evento eventoActualizado) {
+        return eventoRepositorio.findById(id).map(evento -> {
+            evento.setNombre(eventoActualizado.getNombre());
+            evento.setFecha(eventoActualizado.getFecha());
+            evento.setUbicacion(eventoActualizado.getUbicacion());
+            return eventoRepositorio.save(evento);
+        }).orElse(null);
+    }
+
+    // Eliminar evento
+    @DeleteMapping("/{id}")
+    public String eliminarEvento(@PathVariable int id) {
+        if (eventoRepositorio.existsById(id)) {
+            eventoRepositorio.deleteById(id);
+            return "Evento eliminado";
+        }
+        return "Evento no encontrado";
     }
 }

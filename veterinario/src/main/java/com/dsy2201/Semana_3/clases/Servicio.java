@@ -1,13 +1,18 @@
 package com.dsy2201.Semana_3.clases;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
 public class Servicio {
-    private String nombre;
-    private double costo;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String descripcion;
+    private double costo;
 }

@@ -1,38 +1,42 @@
 package com.dsy2201.Semana_3.controlador;
-import com.dsy2201.Semana_3.clases.*;
+
+import com.dsy2201.Semana_3.clases.Factura;
+import com.dsy2201.Semana_3.repositorio.FacturaRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/facturacion")
 public class FacturacionControlador {
-    private final Map<Integer, Factura> facturas = new HashMap<>();
-    private int idCounter = 1;
+
+    @Autowired
+    private FacturaRepositorio facturaRepositorio;
 
     @PostMapping("/registrar")
-    public synchronized Factura registrarServicio(@RequestBody Factura factura) {
-        factura.setId(idCounter++);
-        factura.calcularTotal();
-        facturas.put(factura.getId(), factura);
-        return factura;
+    public Factura registrarFactura(@RequestBody Factura factura) {
+        factura.calcularTotal(); // Suma automática de costos
+        return facturaRepositorio.save(factura);
     }
 
     @GetMapping("/{id}")
     public Factura obtenerFactura(@PathVariable int id) {
-        return facturas.get(id);
+        return facturaRepositorio.findById(id).orElse(null);
     }
 
     @PostMapping("/{id}/pagar")
-    public synchronized String pagarFactura(@PathVariable int id) {
-        Factura factura = facturas.get(id);
-        if (factura == null) {
-            return "Factura no encontrada";
+    public String pagarFactura(@PathVariable int id) {
+        Optional<Factura> optional = facturaRepositorio.findById(id);
+        if (optional.isPresent()) {
+            Factura factura = optional.get();
+            if (factura.isPagada()) {
+                return "La factura ya está pagada";
+            }
+            factura.setPagada(true);
+            facturaRepositorio.save(factura);
+            return "Factura " + id + " pagada exitosamente";
         }
-        if (factura.isPagada()) {
-            return "La factura ya está pagada";
-        }
-        factura.setPagada(true);
-        return "Factura " + id + " pagada exitosamente";
+        return "Factura no encontrada";
     }
 }
