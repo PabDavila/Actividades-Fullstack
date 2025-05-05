@@ -1,7 +1,8 @@
-package com.dsy2201.Semana_3.repositorio;
+package com.dsy2201.Semana_9.repositorio;
 
-import com.dsy2201.Semana_3.clases.Evento;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.dsy2201.Semana_9.clases.Evento;
 
 public interface EventoRepositorio extends JpaRepository<Evento, Integer> {
 }

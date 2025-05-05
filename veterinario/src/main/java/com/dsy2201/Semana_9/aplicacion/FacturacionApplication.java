@@ -1,11 +1,11 @@
-package com.dsy2201.Semana_3.aplicacion;
+package com.dsy2201.Semana_9.aplicacion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EventoApplicacion {
+public class FacturacionApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EventoApplicacion.class, args);
+        SpringApplication.run(FacturacionApplication.class, args);
     }
 }

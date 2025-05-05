@@ -1,9 +1,10 @@
-package com.dsy2201.Semana_3.controlador;
+package com.dsy2201.Semana_9.controlador;
 
-import com.dsy2201.Semana_3.clases.Factura;
-import com.dsy2201.Semana_3.repositorio.FacturaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.dsy2201.Semana_9.clases.Factura;
+import com.dsy2201.Semana_9.repositorio.FacturaRepositorio;
 
 import java.util.Optional;
 
@@ -38,5 +39,13 @@ public class FacturacionControlador {
             return "Factura " + id + " pagada exitosamente";
         }
         return "Factura no encontrada";
+    }
+
+    public Factura registrarServicio(Factura factura) {
+        return factura;
+    }
+
+    public void setFacturaRepositorio(FacturaRepositorio facturaRepositorio) {
+        this.facturaRepositorio = facturaRepositorio;
     }
 }

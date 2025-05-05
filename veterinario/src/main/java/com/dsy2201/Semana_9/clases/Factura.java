@@ -1,4 +1,4 @@
-package com.dsy2201.Semana_3.clases;
+package com.dsy2201.Semana_9.clases;
 
 import jakarta.persistence.*;
 import lombok.*;
