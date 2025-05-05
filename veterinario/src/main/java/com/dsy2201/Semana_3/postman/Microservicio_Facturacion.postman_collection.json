@@ -1,0 +1,69 @@
+{
+  "info": {
+    "_postman_id": "12345678-abcd-efgh-ijkl-1234567890ab",
+    "name": "Microservicio - Facturación",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Registrar factura - Juan Pérez",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"Juan Pérez\",\n  \"servicios\": [\n    { \"descripcion\": \"Asesoría técnica\", \"costo\": 120.0 },\n    { \"descripcion\": \"Instalación de software\", \"costo\": 80.0 }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/facturacion/registrar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["facturacion", "registrar"]
+        }
+      }
+    },
+    {
+      "name": "Registrar factura - María López",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"María López\",\n  \"servicios\": [\n    { \"descripcion\": \"Diseño gráfico\", \"costo\": 150.0 }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/facturacion/registrar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["facturacion", "registrar"]
+        }
+      }
+    },
+    {
+      "name": "Registrar factura - Pedro Sánchez",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"Pedro Sánchez\",\n  \"servicios\": [\n    { \"descripcion\": \"Mantenimiento de red\", \"costo\": 200.0 },\n    { \"descripcion\": \"Revisión de servidores\", \"costo\": 100.0 }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/facturacion/registrar",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["facturacion", "registrar"]
+        }
+      }
+    }
+  ]
+}

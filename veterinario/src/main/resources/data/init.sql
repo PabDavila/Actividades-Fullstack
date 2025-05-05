@@ -29,3 +29,34 @@ CREATE TABLE servicio (
     factura_id NUMBER,
     CONSTRAINT fk_factura FOREIGN KEY (factura_id) REFERENCES factura(id)
 );
+
+-- Insertar eventos
+INSERT INTO evento (id, nombre, fecha, ubicacion)
+VALUES (1, 'Conferencia de Tecnología', '2025-05-10', 'Auditorio 1');
+INSERT INTO evento (id, nombre, fecha, ubicacion)
+VALUES (2, 'Taller de Inteligencia Artificial', '2025-05-15', 'Sala 3');
+INSERT INTO evento (id, nombre, fecha, ubicacion)
+VALUES (3, 'Expo Innovación', '2025-05-20', 'Centro de Eventos');
+
+-- Participantes no se insertan si son lista embebida, se gestionan con controladores.
+
+-- Insertar facturas
+INSERT INTO factura (id, cliente, total, pagada)
+VALUES (1, 'Juan Pérez', 200.0, 0);
+INSERT INTO factura (id, cliente, total, pagada)
+VALUES (2, 'María López', 150.0, 0);
+INSERT INTO factura (id, cliente, total, pagada)
+VALUES (3, 'Pedro Sánchez', 300.0, 0);
+
+-- Insertar servicios asociados (si tienes tabla de servicios relacionada)
+-- Requiere relación FK si está modelado como entidad separada
+INSERT INTO servicio (id, descripcion, costo, factura_id)
+VALUES (1, 'Asesoría técnica', 120.0, 1);
+INSERT INTO servicio (id, descripcion, costo, factura_id)
+VALUES (2, 'Instalación de software', 80.0, 1);
+INSERT INTO servicio (id, descripcion, costo, factura_id)
+VALUES (3, 'Diseño gráfico', 150.0, 2);
+INSERT INTO servicio (id, descripcion, costo, factura_id)
+VALUES (4, 'Mantenimiento de red', 200.0, 3);
+INSERT INTO servicio (id, descripcion, costo, factura_id)
+VALUES (5, 'Revisión de servidores', 100.0, 3);

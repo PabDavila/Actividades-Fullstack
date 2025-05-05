@@ -1,0 +1,90 @@
+{
+    "info": {
+      "_postman_id": "98765432-dcba-hgfe-lkji-0987654321ba",
+      "name": "Microservicio - Evento",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Registrar evento - Conferencia de Tecnología",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombre\": \"Conferencia de Tecnología\",\n  \"fecha\": \"2025-05-10\",\n  \"ubicacion\": \"Auditorio 1\",\n  \"participantes\": [\"Ana\", \"Carlos\", \"Elena\"]\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8080/eventos/registrar",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8080",
+            "path": ["eventos", "registrar"]
+          }
+        }
+      },
+      {
+        "name": "Registrar evento - Taller de IA",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombre\": \"Taller de Inteligencia Artificial\",\n  \"fecha\": \"2025-05-15\",\n  \"ubicacion\": \"Sala 3\",\n  \"participantes\": [\"Luis\", \"Sofía\"]\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8080/eventos/registrar",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8080",
+            "path": ["eventos", "registrar"]
+          }
+        }
+      },
+      {
+        "name": "Registrar evento - Expo Innovación",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"nombre\": \"Expo Innovación\",\n  \"fecha\": \"2025-05-20\",\n  \"ubicacion\": \"Centro de Eventos\",\n  \"participantes\": []\n}"
+          },
+          "url": {
+            "raw": "http://localhost:8080/eventos/registrar",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8080",
+            "path": ["eventos", "registrar"]
+          }
+        }
+      },
+      {
+        "name": "Inscribir participante en evento ID 3",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:8080/eventos/3/inscribir?participante=Lucía",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "8080",
+            "path": ["eventos", "3", "inscribir"],
+            "query": [
+              {
+                "key": "participante",
+                "value": "Lucía"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+  

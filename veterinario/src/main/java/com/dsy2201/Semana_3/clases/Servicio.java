@@ -1,12 +1,11 @@
 package com.dsy2201.Semana_3.clases;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Servicio {
 
     @Id
@@ -15,4 +14,8 @@ public class Servicio {
 
     private String descripcion;
     private double costo;
+
+    @ManyToOne
+    @JoinColumn(name = "factura_id")
+    private Factura factura;
 }

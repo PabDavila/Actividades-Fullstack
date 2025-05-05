@@ -1,15 +1,13 @@
 package com.dsy2201.Semana_3.clases;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Factura {
 
     @Id
@@ -20,11 +18,14 @@ public class Factura {
     private double total;
     private boolean pagada;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "factura_id") // clave foránea en la tabla "servicio"
-    private List<Servicio> servicios = new ArrayList<>();
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    private List<Servicio> servicios;
 
     public void calcularTotal() {
-        this.total = servicios.stream().mapToDouble(Servicio::getCosto).sum();
+        if (servicios != null) {
+            this.total = servicios.stream().mapToDouble(Servicio::getCosto).sum();
+            servicios.forEach(s -> s.setFactura(this)); // asignar relación
+        }
     }
 }
+
