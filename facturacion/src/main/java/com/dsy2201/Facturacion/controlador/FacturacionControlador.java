@@ -1,51 +1,53 @@
-package com.dsy2201.Facturacion.controlador;
+package com.dsy2201.facturacion.controlador;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dsy2201.facturacion.clases.Factura;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
-import com.dsy2201.Facturacion.clases.Factura;
-import com.dsy2201.Facturacion.repositorio.FacturaRepositorio;
-
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/facturacion")
 public class FacturacionControlador {
-
-    @Autowired
-    private FacturaRepositorio facturaRepositorio;
+    private final Map<Integer, Factura> facturas = new HashMap<>();
+    private int idCounter = 1;
 
     @PostMapping("/registrar")
-    public Factura registrarFactura(@RequestBody Factura factura) {
-        factura.calcularTotal(); // Suma automática de costos
-        return facturaRepositorio.save(factura);
+    public synchronized EntityModel<Factura> registrarServicio(@RequestBody Factura factura) {
+        factura.setId(idCounter++);
+        factura.calcularTotal();
+        facturas.put(factura.getId(), factura);
+
+        return EntityModel.of(factura,
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FacturacionControlador.class).obtenerFactura(factura.getId())).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FacturacionControlador.class).pagarFactura(factura.getId())).withRel("pagar_factura")
+        );
     }
 
     @GetMapping("/{id}")
-    public Factura obtenerFactura(@PathVariable int id) {
-        return facturaRepositorio.findById(id).orElse(null);
+    public EntityModel<Factura> obtenerFactura(@PathVariable int id) {
+        Factura factura = facturas.get(id);
+        if (factura == null) {
+            throw new NoSuchElementException("Factura no encontrada");
+        }
+
+        return EntityModel.of(factura,
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FacturacionControlador.class).obtenerFactura(id)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(FacturacionControlador.class).pagarFactura(id)).withRel("pagar_factura")
+        );
     }
 
     @PostMapping("/{id}/pagar")
-    public String pagarFactura(@PathVariable int id) {
-        Optional<Factura> optional = facturaRepositorio.findById(id);
-        if (optional.isPresent()) {
-            Factura factura = optional.get();
-            if (factura.isPagada()) {
-                return "La factura ya está pagada";
-            }
-            factura.setPagada(true);
-            facturaRepositorio.save(factura);
-            return "Factura " + id + " pagada exitosamente";
+    public synchronized String pagarFactura(@PathVariable int id) {
+        Factura factura = facturas.get(id);
+        if (factura == null) {
+            return "Factura no encontrada";
         }
-        return "Factura no encontrada";
-    }
-
-    public Factura registrarServicio(Factura factura) {
-        return factura;
-    }
-
-    public void setFacturaRepositorio(FacturaRepositorio facturaRepositorio) {
-        this.facturaRepositorio = facturaRepositorio;
+        if (factura.isPagada()) {
+            return "La factura ya está pagada";
+        }
+        factura.setPagada(true);
+        return "Factura " + id + " pagada exitosamente";
     }
 }

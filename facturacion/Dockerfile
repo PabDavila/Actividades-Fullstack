@@ -1,6 +1,6 @@
 FROM openjdk:24
 
-WORKDIR /
+WORKDIR /facturacion
 COPY target/facturacion-0.0.1-SNAPSHOT.jar facturacion.jar
 COPY Wallet_DSY2201 /app/oracle_wallet/
 EXPOSE 8080

@@ -1,4 +1,4 @@
-package com.dsy2201.Facturacion.aplicacion;
+package com.dsy2201.facturacion.aplicacion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

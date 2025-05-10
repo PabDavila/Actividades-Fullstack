@@ -1,4 +1,4 @@
-package com.dsy2201.Facturacion.clases;
+package com.dsy2201.facturacion.clases;
 
 import jakarta.persistence.*;
 import lombok.*;
